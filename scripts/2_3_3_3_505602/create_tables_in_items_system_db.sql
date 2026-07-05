@@ -2,6 +2,15 @@
 -- rules - права ролей. roles -> rules - many-to-many
 -- attachs - прикрепленные файлы. items -> attachs - one-to-many
 
+DROP TABLE IF EXISTS comments CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
+DROP TABLE IF EXISTS states CASCADE;
+DROP TABLE IF EXISTS items CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+SET search_path TO public;
+
 -- роли пользователей
 CREATE TABLE roles
 (
@@ -37,7 +46,8 @@ CREATE TABLE categories
 CREATE TABLE items
 (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    item_text TEXT NOT NULL CHECK (char_length(item_text) > 0),
+    item_title TEXT NOT NULL CHECK (char_length(item_title) > 0),
+    item_desc TEXT NOT NULL CHECK (char_length(item_desc) > 0),
     user_id BIGINT NOT NULL REFERENCES users (id) ON UPDATE CASCADE ON DELETE RESTRICT,
     state_id BIGINT NOT NULL REFERENCES states (id) ON DELETE RESTRICT,
     category_id BIGINT NOT NULL REFERENCES categories (id) ON DELETE RESTRICT,
