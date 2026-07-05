@@ -2,12 +2,12 @@
 -- rules - права ролей. roles -> rules - many-to-many
 -- attachs - прикрепленные файлы. items -> attachs - one-to-many
 
-DROP TABLE IF EXISTS comments CASCADE;
-DROP TABLE IF EXISTS categories CASCADE;
-DROP TABLE IF EXISTS roles CASCADE;
-DROP TABLE IF EXISTS states CASCADE;
-DROP TABLE IF EXISTS items CASCADE;
-DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS states;
 
 SET search_path TO public;
 
