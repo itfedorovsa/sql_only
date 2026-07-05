@@ -15,7 +15,7 @@ SET search_path TO public;
 CREATE TABLE roles
 (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    role_type TEXT NOT NULL
+    role_type TEXT NOT NULL UNIQUE
 );
 
 -- пользователи
@@ -32,14 +32,14 @@ CREATE TABLE users
 CREATE TABLE states
 (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    state_type TEXT NOT NULL
+    state_type TEXT NOT NULL UNIQUE
 );
 
 -- категории заявок
 CREATE TABLE categories
 (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    category_type TEXT NOT NULL
+    category_type TEXT NOT NULL UNIQUE
 );
 
 -- заявки
