@@ -1,9 +1,13 @@
 SELECT * FROM users;
 
-SELECT name, email FROM users;
+SELECT name, email
+FROM users;
 
-SELECT id as user_id, name as user_name, email as user_email FROM users;
+SELECT id AS user_id, name AS user_name, email AS user_email
+FROM users;
 
-SELECT id, order_id, product_id, quantity, unit_price, quantity * unit_price as line_total FROM order_items;
+SELECT id, order_id, product_id, quantity, unit_price, quantity * unit_price AS line_total
+FROM order_items;
 
-SELECT id, name, price, price * 0.9 as discounted_price FROM products;
+SELECT id, name, price, price * 0.9 AS discounted_price
+FROM products;
