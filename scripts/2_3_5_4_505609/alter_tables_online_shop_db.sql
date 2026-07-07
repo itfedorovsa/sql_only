@@ -1,0 +1,11 @@
+ALTER TABLE users
+ADD COLUMN phone TEXT NULL;
+
+ALTER TABLE users
+ADD COLUMN middle_name TEXT NULL;
+
+ALTER TABLE products
+ADD COLUMN description TEXT NULL;
+
+ALTER TABLE products
+ADD COLUMN discount_price NUMERIC(12, 2) NULL;
