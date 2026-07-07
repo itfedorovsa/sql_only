@@ -32,11 +32,11 @@ WHERE name ~* 'pro$';
 
 SELECT id, name, email
 FROM users
-WHERE name ILIKE 'a%' OR name ILIKE 'i%';
+WHERE name LIKE 'A%' OR name ILIKE 'I%';
 
 SELECT id, name, email
 FROM users
-WHERE name ~* '^a' OR name ~* '^i';
+WHERE name ~ '^A' OR name ~* '^I';
 
 SELECT id, name, price
 FROM products
