@@ -67,12 +67,12 @@ SELECT 'body' AS detail_type, b.id AS detail_id, b.name AS detail_name
 FROM car_bodies AS b
 LEFT JOIN cars AS c ON c.body_id = b.id
 WHERE c.body_id IS NULL
-UNION
+UNION ALL
 SELECT 'engine' AS detail_type, e.id AS detail_id, e.name AS detail_name
 FROM car_engines AS e
 LEFT JOIN cars AS c ON c.engine_id = e.id
 WHERE c.engine_id IS NULL
-UNION
+UNION ALL
 SELECT 'transmission' AS detail_type, t.id AS detail_id, t.name AS detail_name
 FROM car_transmissions AS t
 LEFT JOIN cars AS c ON c.transmission_id = t.id
