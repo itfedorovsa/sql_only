@@ -1,0 +1,27 @@
+DROP TABLE IF EXISTS cars;
+DROP TABLE IF EXISTS car_bodies;
+DROP TABLE IF EXISTS car_engines;
+DROP TABLE IF EXISTS car_transmissions;
+
+CREATE TABLE car_bodies (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE car_engines (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE car_transmissions (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE cars (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name TEXT NOT NULL,
+    body_id BIGINT REFERENCES car_bodies(id),
+    engine_id BIGINT REFERENCES car_engines(id),
+    transmission_id BIGINT REFERENCES car_transmissions(id)
+);
