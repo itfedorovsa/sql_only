@@ -38,7 +38,7 @@ LEFT JOIN users AS u ON ur.user_id = u.id;
 -- построить все комбинации role × environment
 SELECT r.code AS role_code, e.code AS env_code
 FROM roles AS r
-CROSS JOIN environments AS e
+CROSS JOIN environments AS e;
 
 -- вывести все категории вместе с именем их родительской категории
 SELECT c.name AS category, ct.name AS parent

@@ -83,13 +83,14 @@ CREATE TABLE categories
     parent_id BIGINT REFERENCES categories (id)
 );
 
-INSERT INTO categories (id, name, parent_id)
+INSERT INTO categories (name, parent_id)
 VALUES
-    (1, 'Электроника', NULL),
-    (2, 'Смартфоны', 1),
-    (3, 'Ноутбуки', 1),
-    (4, 'Аксессуары', 1),
-    (5, 'Чехлы', 4);
+    ('Электроника', NULL),
+    ('Смартфоны', 1),
+    ('Ноутбуки', 1),
+    ('Аксессуары', 1),
+    ('Чехлы', 4);
+
 
 -- self join
 SELECT
