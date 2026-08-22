@@ -1,7 +1,5 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.0"
-    id("jacoco")
 }
 
 group = "fedorovsa"
