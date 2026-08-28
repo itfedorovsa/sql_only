@@ -1,0 +1,101 @@
+CREATE TABLE users(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+name TEXT NOT NULL,
+email TEXT NOT NULL UNIQUE,
+created_at TIMESTAMP NOT NULL DEFAULT now()
+);
+
+CREATE TABLE addresses(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+city TEXT NOT NULL,
+street TEXT NOT NULL,
+is_default BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE brands(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE categories(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE products(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+brand_id BIGINT NOT NULL REFERENCES brands(id),
+name TEXT NOT NULL,
+price NUMERIC(12, 2) NOT NULL CHECK (price >= 0),
+stock INT NOT NULL DEFAULT 0 CHECK (stock >= 0),
+is_active BOOLEAN NOT NULL DEFAULT TRUE,
+created_at TIMESTAMP NOT NULL DEFAULT now()
+);
+
+
+CREATE TABLE product_categories(
+product_id BIGINT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+category_id BIGINT NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+PRIMARY KEY(product_id, category_id)
+);
+
+CREATE TABLE orders(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+user_id BIGINT NOT NULL REFERENCES users(id),
+address_id BIGINT NOT NULL REFERENCES addresses(id),
+status TEXT NOT NULL DEFAULT 'new' CHECK(status IN ('new', 'processing', 'shipped', 'completed', 'cancelled')),
+created_at TIMESTAMP NOT NULL DEFAULT now()
+);
+
+CREATE TABLE order_items(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+order_id BIGINT NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+product_id BIGINT NOT NULL REFERENCES products(id),
+quantity INT NOT NULL CHECK (quantity > 0),
+price NUMERIC(12, 2) NOT NULL CHECK (price >= 0),
+UNIQUE(order_id, product_id)
+);
+
+
+CREATE TABLE payments(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+order_id BIGINT NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+amount NUMERIC(12, 2) NOT NULL CHECK (amount > 0),
+p_type TEXT NOT NULL CHECK(p_type IN ('card', 'cash', 'sbp')),
+status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending', 'paid', 'failed', 'refunded')),
+created_at TIMESTAMP NOT NULL DEFAULT now()
+);
+
+CREATE TABLE deliveries(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+order_id BIGINT NOT NULL REFERENCES orders(id) ON DELETE CASCADE UNIQUE,
+status TEXT NOT NULL CHECK(status IN ('pending', 'shipped', 'delivered', 'cancelled')),
+delivery_cost NUMERIC(12, 2) NOT NULL CHECK (delivery_cost >= 0),
+shipped_at TIMESTAMP,
+delivered_at TIMESTAMP
+);
+
+CREATE TABLE reviews(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+user_id BIGINT NOT NULL REFERENCES users(id),
+product_id BIGINT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+rating INT NOT NULL CHECK(rating BETWEEN 1 AND 5),
+review TEXT,
+created_at TIMESTAMP NOT NULL DEFAULT now(),
+UNIQUE(user_id, product_id)
+);
+
+CREATE TABLE promotions(
+id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+name TEXT NOT NULL,
+percent INT NOT NULL CHECK (percent > 0 AND PERCENT <= 100),
+starts_at TIMESTAMP NOT NULL,
+ends_at TIMESTAMP NOT NULL CHECK (ends_at >= starts_at)
+);
+
+CREATE TABLE product_promotions(
+product_id BIGINT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+promotion_id BIGINT NOT NULL REFERENCES promotions(id) ON DELETE CASCADE,
+PRIMARY KEY(product_id, promotion_id)
+);
